@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -20,16 +21,17 @@ public class MapGenerator : MonoBehaviour
     private System.Random rand = null;
 
     private int reqFloorAmount = 0;
-    
+    [Tooltip("The Tilemap to draw onto")]
+	public Tilemap Tilemap;
+
+    public Tile[] Tiles = new Tile[4]; 
+
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
     public int[,] map{
         get; 
         private set;
     }
- [SerializeField]
- private int privateA = 0;
-    internal int internalA =0;
-    enum Count {ZERO =0,ONE =1}
+
     private void Start()
     {
         // mapを作成する
@@ -89,6 +91,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+        RenderMap(map);
     }
 
     /// <summary>
@@ -197,5 +200,42 @@ public class MapGenerator : MonoBehaviour
         }
         //Return the updated map
         return map; 
+    }
+
+
+
+
+    /// <summary>
+    /// Draws the map to the screen
+    /// </summary>
+    /// <param name="map">Map that we want to draw</param>
+    /// <param name="tilemap">Tilemap we will draw onto</param>
+    /// <param name="tile">Tile we will draw with</param>
+    public void RenderMap(int[,] map)
+    {
+        Tilemap.ClearAllTiles(); //Clear the map (ensures we dont overlap)
+        for (int x = 0; x < width ; x++) //Loop through the width of the map
+        {
+            for (int y = 0; y < height; y++) //Loop through the height of the map
+            {
+                if (map[x, y] == (int)DungeonMapType.Floor)
+                {
+                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]); 
+                }
+                if (map[x, y] == (int)DungeonMapType.Wall)
+                {
+                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[1]); 
+                }
+
+                if (map[x, y] == (int)DungeonMapType.StartPos)
+                {
+                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[2]); 
+                }
+                if (map[x, y] == (int)DungeonMapType.NextStagePos)
+                {
+                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[3]); 
+                }
+            }
+        }
     }
 }
