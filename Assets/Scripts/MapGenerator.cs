@@ -10,9 +10,30 @@ public class MapGenerator : MonoBehaviour
 	[SerializeField]
 	private int height =20;
 
-    void Start()
+    // DungeonMapのタイプを選定する
+    private enum DungeonMapType{
+        Floor = 0,
+        Wall = 1,
+        StartPos =2,
+        NextStagePos = 999,
+    }
+    private System.Random rand = null;
+
+    private int reqFloorAmount = 0;
+    
+    // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
+    public int[,] map{
+        get; 
+        private set;
+    }
+ [SerializeField]
+ private int privateA = 0;
+    internal int internalA =0;
+    enum Count {ZERO =0,ONE =1}
+    private void Start()
     {
-        int[,] map = new int[width, height];
+        // mapを作成する
+        map = new int[width,height];
         // mapを埋める
         // GetUpperBound(0)は一次元配列の要素の最後の場所を返す
         // 例：[1,2,4,8,16,32]の場合、GetUpperBound(0)は5
@@ -21,13 +42,53 @@ public class MapGenerator : MonoBehaviour
             // GetUpperBound(1)は二次元配列の二次元目の最後の場所を返す
             for (int y = 0; y < map.GetUpperBound(1); y++)
             {
-                map[x, y] = 1;
+                map[x, y] = (int)DungeonMapType.Wall;
             }
         }
         // seedを決めます。Randomにしたい場合はTime.timeなどが一般的。
         float seed = 1f;
         map = RandomWalkCave(map,seed,50);
-        Debug.Log(map);
+
+        // スタート位置と決めます
+        // mapの中の0を操作して、ランダムに座標を取り出します。
+        // seedも同じように結果を固定できるようにします。
+        if(rand == null){
+            rand = new System.Random(seed.GetHashCode());
+        }
+
+        if(reqFloorAmount == 0){
+            Debug.LogError("mapが生成されませんでした。reqFloorAmountが0です。");
+        }
+        var startPos = rand.Next(reqFloorAmount);
+
+        Debug.Log($"startPos:{startPos}");
+        var nextStagePos = rand.Next(reqFloorAmount);
+        
+        Debug.Log($"nextStagePos:{nextStagePos}");
+        // もし結果が同じだった場合はもう一度nextStagePosをRandomで振り直す
+        if(startPos == nextStagePos){
+            nextStagePos = rand.Next(reqFloorAmount);
+        }
+
+        // カウントを0からスタートさせたいので-1からカウントアップさせていく。
+        var posCount = -1;
+        // GetUpperBound(0)はその次元の最後の値の場所を返す
+        for (int x = 0; x < map.GetUpperBound(0); x++)
+        {
+            for (int y = 0; y < map.GetUpperBound(1); y++)
+            {
+                // mapの座標が空いていればstartposとnextStagePosの場合にそこの座標を変更する
+                if(map[x, y] == 0){
+                    posCount++;
+                    if(posCount == startPos){
+                        map[x, y] = (int)DungeonMapType.StartPos;
+                    }
+                    if(posCount == nextStagePos){
+                        map[x, y] = (int)DungeonMapType.NextStagePos;
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -40,8 +101,7 @@ public class MapGenerator : MonoBehaviour
     public int[,] RandomWalkCave(int[,] map, float seed,  int requiredFloorPercent)
     {
         //Seed our random
-        System.Random rand = new System.Random(seed.GetHashCode());
-
+        rand = new System.Random(seed.GetHashCode());
         //Define our start x position
         int floorX = rand.Next(1, map.GetUpperBound(0) - 1);
  
@@ -49,8 +109,9 @@ public class MapGenerator : MonoBehaviour
         // rand.Nextは引数までの整数を返す。
         int floorY = rand.Next(1, map.GetUpperBound(1) - 1);
         //Determine our required floorAmount
-        // 以下の計算は[20,20] 、requiredFloorPercentが50だと(19*19*50)/100=180マスとなる
-        int reqFloorAmount = ((map.GetUpperBound(1) * map.GetUpperBound(0)) * requiredFloorPercent) / 100; 
+        // 以下の計算は[20,20] 、requiredFloorPercentが50だと(20*20*50)/100=200マスとなる
+        reqFloorAmount = (((map.GetUpperBound(1)+1) * (map.GetUpperBound(0)+1)) * requiredFloorPercent) / 100; 
+        
         //Used for our while loop, when this reaches our reqFloorAmount we will stop tunneling
         int floorCount = 0;
 
@@ -78,7 +139,7 @@ public class MapGenerator : MonoBehaviour
                         if (map[floorX, floorY] == 1) 
                         {
                             //Change it to not a tile
-                            map[floorX, floorY] = 0;
+                            map[floorX, floorY] = (int)DungeonMapType.Floor;
                             //Increase floor count
                             floorCount++; 
                         }
@@ -94,7 +155,7 @@ public class MapGenerator : MonoBehaviour
                         if (map[floorX, floorY] == 1) 
                         {
                             //Change it to not a tile
-                            map[floorX, floorY] = 0;
+                            map[floorX, floorY] = (int)DungeonMapType.Floor;
                             //Increase the floor count
                             floorCount++; 
                         }
@@ -110,7 +171,7 @@ public class MapGenerator : MonoBehaviour
                         if (map[floorX, floorY] == 1) 
                         {
                             //Change it to not a tile
-                            map[floorX, floorY] = 0;
+                            map[floorX, floorY] = (int)DungeonMapType.Floor;
                             //Increase the floor count
                             floorCount++; 
                         }
@@ -126,7 +187,7 @@ public class MapGenerator : MonoBehaviour
                         if (map[floorX, floorY] == 1) 
                         {
                             //Change it to not a tile
-                            map[floorX, floorY] = 0;
+                            map[floorX, floorY] = (int)DungeonMapType.Floor;
                             //Increase the floor count
                             floorCount++; 
                         }
