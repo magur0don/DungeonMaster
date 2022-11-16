@@ -16,15 +16,22 @@ public class MapGenerator : MonoBehaviour
         Floor = 0,
         Wall = 1,
         StartPos =2,
+        Portion =3 ,
         NextStagePos = 999,
     }
     private System.Random rand = null;
 
     private int reqFloorAmount = 0;
     [Tooltip("The Tilemap to draw onto")]
-	public Tilemap Tilemap;
 
-    public Tile[] Tiles = new Tile[4]; 
+    // 地面など描画するためのTilemap(Collision無)
+	public Tilemap GroundTilemap;
+    // 壁を描画するためのTilemap(Collision有)
+    public Tilemap WallTilemap;
+    // アイテムなど描画するためのTilemap(Collision有)
+    public Tilemap OuterTilemap;
+
+    public Tile[] Tiles = new Tile[5]; 
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
     public int[,] map{
@@ -38,11 +45,10 @@ public class MapGenerator : MonoBehaviour
         map = new int[width,height];
         // mapを埋める
         // GetUpperBound(0)は一次元配列の要素の最後の場所を返す
-        // 例：[1,2,4,8,16,32]の場合、GetUpperBound(0)は5
-        for (int x = 0; x < map.GetUpperBound(0); x++)
+        for (int x = 0; x < width; x++)
         {
             // GetUpperBound(1)は二次元配列の二次元目の最後の場所を返す
-            for (int y = 0; y < map.GetUpperBound(1); y++)
+            for (int y = 0; y < height; y++)
             {
                 map[x, y] = (int)DungeonMapType.Wall;
             }
@@ -72,6 +78,9 @@ public class MapGenerator : MonoBehaviour
             nextStagePos = rand.Next(reqFloorAmount);
         }
 
+        // Portionの場所もランダムで決める
+        var portionPos = rand.Next(reqFloorAmount);
+
         // カウントを0からスタートさせたいので-1からカウントアップさせていく。
         var posCount = -1;
         // GetUpperBound(0)はその次元の最後の値の場所を返す
@@ -87,6 +96,9 @@ public class MapGenerator : MonoBehaviour
                     }
                     if(posCount == nextStagePos){
                         map[x, y] = (int)DungeonMapType.NextStagePos;
+                    }
+                    if(posCount == portionPos){
+                        map[x, y] = (int)DungeonMapType.Portion;
                     }
                 }
             }
@@ -106,14 +118,14 @@ public class MapGenerator : MonoBehaviour
         //Seed our random
         rand = new System.Random(seed.GetHashCode());
         //Define our start x position
-        int floorX = rand.Next(1, map.GetUpperBound(0) - 1);
+        int floorX = rand.Next(1, width - 1);
  
         //Define our start y position
         // rand.Nextは引数までの整数を返す。
-        int floorY = rand.Next(1, map.GetUpperBound(1) - 1);
+        int floorY = rand.Next(1, height - 1);
         //Determine our required floorAmount
         // 以下の計算は[20,20] 、requiredFloorPercentが50だと(20*20*50)/100=200マスとなる
-        reqFloorAmount = (((map.GetUpperBound(1)+1) * (map.GetUpperBound(0)+1)) * requiredFloorPercent) / 100; 
+        reqFloorAmount = (width * height * requiredFloorPercent) / 100; 
         
         //Used for our while loop, when this reaches our reqFloorAmount we will stop tunneling
         int floorCount = 0;
@@ -203,38 +215,44 @@ public class MapGenerator : MonoBehaviour
     }
 
 
-
-
     /// <summary>
     /// Draws the map to the screen
     /// </summary>
     /// <param name="map">Map that we want to draw</param>
-    /// <param name="tilemap">Tilemap we will draw onto</param>
-    /// <param name="tile">Tile we will draw with</param>
     public void RenderMap(int[,] map)
     {
-        Tilemap.ClearAllTiles(); //Clear the map (ensures we dont overlap)
+        GroundTilemap.ClearAllTiles(); //Clear the map (ensures we dont overlap)
+        WallTilemap.ClearAllTiles(); //Clear the map (ensures we dont overlap)
+        OuterTilemap.ClearAllTiles(); //Clear the map (ensures we dont overlap)
+
         for (int x = 0; x < width ; x++) //Loop through the width of the map
         {
             for (int y = 0; y < height; y++) //Loop through the height of the map
             {
                 if (map[x, y] == (int)DungeonMapType.Floor)
                 {
-                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]); 
+                    GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]); 
                 }
                 if (map[x, y] == (int)DungeonMapType.Wall)
                 {
-                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[1]); 
+                    WallTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[1]); 
                 }
 
                 if (map[x, y] == (int)DungeonMapType.StartPos)
                 {
-                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[2]); 
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[2]); 
                 }
                 if (map[x, y] == (int)DungeonMapType.NextStagePos)
                 {
-                    Tilemap.SetTile(new Vector3Int(x, y, 0), Tiles[3]); 
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[3]); 
                 }
+
+                if (map[x, y] == (int)DungeonMapType.Portion)
+                {
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[4]); 
+                    GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]); 
+                }
+
             }
         }
     }
