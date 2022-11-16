@@ -235,7 +235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 10, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -256,9 +256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 20
   height: 20
-  Tilemap: {fileID: 0}
+  Tilemap: {fileID: 1115677390}
   Tiles:
-  - {fileID: 11400000, guid: b3eaef07a36a98241a51ab246847735b, type: 2}
+  - {fileID: 11400000, guid: 5d6edc6cbe65dfa48b32b2e1b19b49c9, type: 2}
   - {fileID: 11400000, guid: 603359f03d298e1479ef4bc9950ee8a6, type: 2}
   - {fileID: 11400000, guid: 2ba16777e1d828c43b297a91ec8f530e, type: 2}
   - {fileID: 11400000, guid: 2ba16777e1d828c43b297a91ec8f530e, type: 2}
