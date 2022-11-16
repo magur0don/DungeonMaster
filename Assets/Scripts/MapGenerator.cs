@@ -11,7 +11,6 @@ public class MapGenerator : MonoBehaviour
 	[SerializeField]
 	private int height =20;
 
-    // DungeonMapのタイプを選定する
     private enum DungeonMapType{
         Floor = 0,
         Wall = 1,
