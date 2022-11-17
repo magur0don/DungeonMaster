@@ -33,7 +33,7 @@ public class MapGenerator : MonoBehaviour
     public Tile[] Tiles = new Tile[5]; 
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
-    public int[,] map{
+    public static int[,] map{
         get; 
         private set;
     }
