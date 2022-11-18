@@ -17,23 +17,28 @@ public class WalkState : IState
     }
     public Arrow Arrows;
 
-    public void OnEnter(GameObject characterGameObject)
-    {
-        if (character != null) {
+    public WalkState(GameObject characterGameObject) {
+
+        if (character != null)
+        {
             return;
         }
         character = characterGameObject;
         characterAnimator = character.GetComponentInChildren<Animator>();
     }
 
+    public void OnEnter()
+    {
+        // 何かWalkをするときにチェックしたいことがあれば追加
+    }
+
     public void OnUpdate()
     {
-        if (character == null) {
-            Debug.LogError("Characterが参照されていません");
-        }
         var FloorToIntPos = Vector3Int.FloorToInt(character.transform.position);
+        if (character.transform.position != FloorToIntPos) {
+            character.transform.position = FloorToIntPos;
+        }
 
-        character.transform.position = FloorToIntPos;
         switch (Arrows) {
             case Arrow.Invalide:
                 break;

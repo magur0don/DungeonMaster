@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterBase : MonoBehaviour
@@ -8,8 +9,7 @@ public class CharacterBase : MonoBehaviour
 
     private void Awake()
     {
-        WalkState = new WalkState();
-        WalkState.OnEnter(this.gameObject);
+        WalkState = new WalkState(this.gameObject);
     }
 
     private void Start()
