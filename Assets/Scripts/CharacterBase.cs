@@ -44,7 +44,7 @@ public class CharacterBase : MonoBehaviour
                 if (CheckPos(FloorToIntPos += Vector3Int.left))
                 {
                     this.transform.position += Vector3Int.left;
-                    characterAnimator.SetBool(Walk, true);
+                    AnimationExecution(Walk, Vector3Int.left);
                 }
                 break;
 
@@ -53,7 +53,7 @@ public class CharacterBase : MonoBehaviour
                 if (CheckPos(FloorToIntPos += Vector3Int.up))
                 {
                     this.transform.position += Vector3Int.up;
-                    characterAnimator.SetBool(Walk, true);
+                    AnimationExecution(Walk, Vector3Int.up);
                 }
                 break;
 
@@ -62,7 +62,8 @@ public class CharacterBase : MonoBehaviour
                 if (CheckPos(FloorToIntPos += Vector3Int.right))
                 {
                     this.transform.position += Vector3Int.right;
-                    characterAnimator.SetBool(Walk, true);
+                    AnimationExecution(Walk, Vector3Int.right);
+
                 }
                 break;
 
@@ -71,7 +72,7 @@ public class CharacterBase : MonoBehaviour
                 if (CheckPos(FloorToIntPos += Vector3Int.down))
                 {
                     this.transform.position += Vector3Int.down;
-                    characterAnimator.SetBool(Walk, true);
+                    AnimationExecution(Walk, Vector3Int.down);
                 }
                 break;
         }
@@ -81,6 +82,13 @@ public class CharacterBase : MonoBehaviour
     protected void SetArrowState(Arrow arrow) {
 
         Arrows = arrow;
+    }
+
+    private void AnimationExecution(string animationName,Vector3Int direction) {
+        characterAnimator.SetBool(animationName, true);
+        characterAnimator.SetFloat("X", direction.x);
+        characterAnimator.SetFloat("Y", direction.y);
+        characterAnimator.SetTrigger("Clicked");
     }
 
     // 進む先に壁がないかをチェックする
