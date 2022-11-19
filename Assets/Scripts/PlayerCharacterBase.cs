@@ -15,19 +15,19 @@ public class PlayerCharacterBase : CharacterBase
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            base.SetState(WalkState.Arrow.Left);
+            base.SetArrowState(Arrow.Left);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            base.SetState(WalkState.Arrow.Up);
+            base.SetArrowState(Arrow.Up);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            base.SetState(WalkState.Arrow.Down);
+            base.SetArrowState(Arrow.Down);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            base.SetState(WalkState.Arrow.Right);
+            base.SetArrowState(Arrow.Right);
         }
         base.Update();
     }
