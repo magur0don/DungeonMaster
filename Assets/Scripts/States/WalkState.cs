@@ -4,9 +4,6 @@ public class WalkState : IState
 {
     private GameObject character = null;
 
-
-
-
     public WalkState(GameObject characterGameObject) {
 
         if (character != null)
@@ -25,6 +22,9 @@ public class WalkState : IState
     {
       
     }
+    public void OnExit() {
 
+
+    }
 
 }
