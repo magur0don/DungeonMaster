@@ -29,6 +29,10 @@ public class PlayerCharacterBase : CharacterBase
         {
             base.SetArrowState(Arrow.Right);
         }
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            base.IsAttack = true;
+        }
+
         base.Update();
     }
 }

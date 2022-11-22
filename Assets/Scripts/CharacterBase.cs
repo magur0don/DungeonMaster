@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static WalkState;
-using UnityEngine.TextCore.Text;
 
 public class CharacterBase : MonoBehaviour
 {
@@ -21,6 +18,15 @@ public class CharacterBase : MonoBehaviour
 
     private const string Walk = "Walk";
 
+    private const string Attack = "Attack";
+
+    private string currentAnimationName = string.Empty;
+
+    protected bool IsAttack = false;
+
+
+    private Vector3Int characterDirection = Vector3Int.zero;
+
     private void Awake()
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
@@ -28,6 +34,7 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void Update()
     {
+
         var FloorToIntPos = Vector3Int.FloorToInt(this.transform.position);
         if (this.transform.position != FloorToIntPos)
         {
@@ -43,8 +50,9 @@ public class CharacterBase : MonoBehaviour
                 // 左に移動
                 if (CheckPos(FloorToIntPos += Vector3Int.left))
                 {
-                    this.transform.position += Vector3Int.left;
-                    AnimationExecution(Walk, Vector3Int.left);
+                    characterDirection = Vector3Int.left;
+                    this.transform.position += characterDirection;
+                    AnimationExecution(Walk, characterDirection);
                 }
                 break;
 
@@ -52,8 +60,9 @@ public class CharacterBase : MonoBehaviour
                 // 上に移動
                 if (CheckPos(FloorToIntPos += Vector3Int.up))
                 {
-                    this.transform.position += Vector3Int.up;
-                    AnimationExecution(Walk, Vector3Int.up);
+                    characterDirection = Vector3Int.up; 
+                    this.transform.position += characterDirection;
+                    AnimationExecution(Walk, characterDirection);
                 }
                 break;
 
@@ -61,8 +70,9 @@ public class CharacterBase : MonoBehaviour
                 // 右に移動
                 if (CheckPos(FloorToIntPos += Vector3Int.right))
                 {
-                    this.transform.position += Vector3Int.right;
-                    AnimationExecution(Walk, Vector3Int.right);
+                    characterDirection = Vector3Int.right;
+                    this.transform.position += characterDirection;
+                    AnimationExecution(Walk, characterDirection);
 
                 }
                 break;
@@ -71,20 +81,35 @@ public class CharacterBase : MonoBehaviour
                 // 下に移動
                 if (CheckPos(FloorToIntPos += Vector3Int.down))
                 {
-                    this.transform.position += Vector3Int.down;
-                    AnimationExecution(Walk, Vector3Int.down);
+                    characterDirection = Vector3Int.down;
+                    this.transform.position += characterDirection;
+                    AnimationExecution(Walk, characterDirection);
                 }
                 break;
         }
         Arrows = Arrow.Invalide;
+
+        if (IsAttack)
+        {
+            AnimationExecution(Attack, characterDirection);
+            IsAttack = false;
+        }
     }
 
-    protected void SetArrowState(Arrow arrow) {
-
+    protected void SetArrowState(Arrow arrow)
+    {
         Arrows = arrow;
     }
 
-    private void AnimationExecution(string animationName,Vector3Int direction) {
+
+    private void AnimationExecution(string animationName,Vector3Int direction)
+    {
+        // 違うアニメーションがきた場合、前のステートのアニメーションをオフにする
+        if (currentAnimationName != animationName) {
+            characterAnimator.SetBool(currentAnimationName, false);
+            currentAnimationName = animationName;
+        }
+
         characterAnimator.SetBool(animationName, true);
         characterAnimator.SetFloat("X", direction.x);
         characterAnimator.SetFloat("Y", direction.y);
