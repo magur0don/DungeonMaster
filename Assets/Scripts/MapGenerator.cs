@@ -38,6 +38,9 @@ public class MapGenerator : MonoBehaviour
         private set;
     }
 
+    public static Vector2 StartPos = Vector2.zero;
+
+
     private void Start()
     {
         // mapを作成する
@@ -92,6 +95,7 @@ public class MapGenerator : MonoBehaviour
                     posCount++;
                     if(posCount == startPos){
                         map[x, y] = (int)DungeonMapType.StartPos;
+                        StartPos = new Vector2(x,y);
                     }
                     if(posCount == nextStagePos){
                         map[x, y] = (int)DungeonMapType.NextStagePos;
