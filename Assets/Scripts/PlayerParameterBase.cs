@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerParameterBase: MonoBehaviour
 {
     // 外部的要因でパラメーターを変化させたい場合があるのでpublicで作成
-    public CharacterParameterBase characterParameter;
+    public CharacterParameterBase PlayerCharacterParameter;
 
     [SerializeField]
     private int hitPoint;
@@ -13,6 +13,6 @@ public class PlayerParameterBase: MonoBehaviour
 
     private void Awake()
     {
-        characterParameter = new CharacterParameterBase(hitPoint, attackPoint);
+        PlayerCharacterParameter = new CharacterParameterBase(hitPoint, attackPoint);
     }
 }
