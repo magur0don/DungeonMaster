@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -30,7 +32,9 @@ public class MapGenerator : MonoBehaviour
     // アイテムなど描画するためのTilemap(Collision有)
     public Tilemap OuterTilemap;
 
-    public Tile[] Tiles = new Tile[5]; 
+    public Tile[] Tiles = new Tile[5];
+
+    public RuleTile potion;
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
     public static int[,] map{
@@ -252,11 +256,15 @@ public class MapGenerator : MonoBehaviour
 
                 if (map[x, y] == (int)DungeonMapType.Portion)
                 {
-                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[4]); 
-                    GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]); 
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), potion);
+                    // OuterTilemap.
+                    GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]);
                 }
 
             }
         }
     }
+
+
+
 }

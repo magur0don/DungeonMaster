@@ -15,4 +15,12 @@ public class PlayerParameterBase: MonoBehaviour
     {
         PlayerCharacterParameter = new CharacterParameterBase(hitPoint, attackPoint);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            PlayerCharacterParameter.HitPoint -= 10;
+            Debug.Log(PlayerCharacterParameter.HitPoint);
+        }
+    }
 }

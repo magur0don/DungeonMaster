@@ -339,6 +339,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ba16777e1d828c43b297a91ec8f530e, type: 2}
   - {fileID: 11400000, guid: 2ba16777e1d828c43b297a91ec8f530e, type: 2}
   - {fileID: 11400000, guid: b0f185ed658f0b044acf3ee2da345d40, type: 2}
+  potion: {fileID: 11400000, guid: 03a058940db334421b30fc18e277affa, type: 2}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
