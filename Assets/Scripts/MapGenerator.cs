@@ -44,6 +44,7 @@ public class MapGenerator : MonoBehaviour
 
     public static Vector2 StartPos = Vector2.zero;
 
+    public static List<Vector2> EnemyPos = new List<Vector2>();
 
     private void Start()
     {
@@ -87,6 +88,9 @@ public class MapGenerator : MonoBehaviour
         // Portionの場所もランダムで決める
         var portionPos = rand.Next(reqFloorAmount);
 
+
+        var enemyPos = rand.Next(reqFloorAmount);
+
         // カウントを0からスタートさせたいので-1からカウントアップさせていく。
         var posCount = -1;
         // GetUpperBound(0)はその次元の最後の値の場所を返す
@@ -107,10 +111,17 @@ public class MapGenerator : MonoBehaviour
                     if(posCount == portionPos){
                         map[x, y] = (int)DungeonMapType.Portion;
                     }
+                    if (posCount == enemyPos)
+                    {
+                        EnemyPos.Add(new Vector2(x, y));
+                    }
                 }
             }
         }
         RenderMap(map);
+
+        // マップを生成した
+        this.GetComponent<EnemySpawner>().EnemySpawn();
     }
 
     /// <summary>
