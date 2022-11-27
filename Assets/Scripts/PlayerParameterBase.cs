@@ -1,26 +1,17 @@
 using UnityEngine;
 
-public class PlayerParameterBase: MonoBehaviour
+public class PlayerParameterBase: CharacterParameterBase
 {
-    // 外部的要因でパラメーターを変化させたい場合があるのでpublicで作成
-    public CharacterParameterBase PlayerCharacterParameter;
-
+   
     [SerializeField]
     private int hitPoint;
 
     [SerializeField]
     private int attackPoint;
 
-    private void Awake()
+    protected PlayerParameterBase(int hitPoint, int attackPoint) : base(hitPoint, attackPoint)
     {
-        PlayerCharacterParameter = new CharacterParameterBase(hitPoint, attackPoint);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z)) {
-            PlayerCharacterParameter.HitPoint -= 10;
-            Debug.Log(PlayerCharacterParameter.HitPoint);
-        }
+        this.hitPoint = hitPoint;
+        this.attackPoint = attackPoint;
     }
 }

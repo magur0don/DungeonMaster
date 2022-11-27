@@ -76,7 +76,6 @@ public class EnemyCharacterBase : CharacterBase
                 if (playerDiff <= 2)
                 {
                     base.IsAttack = true;
-                    
                 }
                 else {// そうでなければプレイヤーをおう
                     base.SetArrowState((Arrow)chaseDirection);

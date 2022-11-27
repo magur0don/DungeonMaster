@@ -34,7 +34,7 @@ public class CharacterBase : MonoBehaviour
     }
 
     public virtual void Update()
-    {
+    { 
 
         var FloorToIntPos = Vector3Int.FloorToInt(this.transform.position);
         if (this.transform.position != FloorToIntPos)
@@ -120,7 +120,7 @@ public class CharacterBase : MonoBehaviour
         characterAnimator.SetTrigger("Clicked");
         if (animationName == Attack)
         {
-            StartCoroutine(AttackAnimationEnd());
+            StartCoroutine(AttackAnimationExecution());
         }
         else {// ただの移動なら攻撃のモーションを即座にキャンセル
             characterAnimator.SetBool(Attack, false);
@@ -128,12 +128,23 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackAnimationEnd() {
-
+    // 攻撃のアニメーションの時にダメージを負わせる実装
+    private IEnumerator AttackAnimationExecution() {
+        var face = Vector3.zero;
+        face = characterDirection;
+        // アニメーションの途中で
+        yield return new WaitUntil(() => animationNormalizedTime > 0.5f);
+        // rayを飛ばす。
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, face);
+        if (hit.collider != null)
+        {
+            Debug.Log(hit.transform.name);
+        }
         yield return new WaitUntil(()=>animationNormalizedTime > 1);
         characterAnimator.SetBool(Attack, false);
         characterAnimator.SetTrigger("Clicked");
     }
+
 
     // 進む先に壁がないかをチェックする
     private bool CheckPos(Vector3 vec)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyParameterBase : MonoBehaviour
+public class EnemyParameterBase : CharacterParameterBase
 {
     // 外部的要因でパラメーターを変化させたい場合があるのでpublicで作成
     public CharacterParameterBase EnemyCharacterParameter;
@@ -11,8 +11,10 @@ public class EnemyParameterBase : MonoBehaviour
     [SerializeField]
     private int attackPoint;
 
-    private void Awake()
+    protected EnemyParameterBase(int hitPoint, int attackPoint) : base(hitPoint, attackPoint)
     {
-        EnemyCharacterParameter = new CharacterParameterBase(hitPoint, attackPoint);
+        this.hitPoint = hitPoint;
+        this.attackPoint = attackPoint;
     }
+
 }
