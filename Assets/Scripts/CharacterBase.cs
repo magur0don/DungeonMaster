@@ -20,8 +20,6 @@ public class CharacterBase : MonoBehaviour
 
     private const string Attack = "Attack";
 
-    private string currentAnimationName = string.Empty;
-
     protected bool IsAttack = false;
 
     private float animationNormalizedTime = 0;
@@ -32,8 +30,6 @@ public class CharacterBase : MonoBehaviour
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
     }
-
-
 
     public virtual void Update()
     {
@@ -97,7 +93,9 @@ public class CharacterBase : MonoBehaviour
             AnimationExecution(Attack, characterDirection);
             IsAttack = false;
         }
+
         animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        Debug.Log($"{this.gameObject.name}{animationNormalizedTime}");
     }
 
     protected void SetArrowState(Arrow arrow)

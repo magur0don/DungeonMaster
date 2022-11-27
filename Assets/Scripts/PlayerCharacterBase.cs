@@ -14,6 +14,10 @@ public class PlayerCharacterBase : CharacterBase
     // Update is called once per frame
     public override void Update()
     {
+        if (Input.anyKeyDown) {
+            GameTurnManager.PlayerActionTurnExecution();
+        }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             base.SetArrowState(Arrow.Left);
@@ -33,7 +37,15 @@ public class PlayerCharacterBase : CharacterBase
         if (Input.GetKeyDown(KeyCode.Space)) {
             base.IsAttack = true;
         }
-
         base.Update();
+    }
+
+    private void LateUpdate()
+    {
+
+        if (base.Arrows == Arrow.Invalide)
+        {
+            GameTurnManager.PlayerActionTurnEnd();
+        }
     }
 }

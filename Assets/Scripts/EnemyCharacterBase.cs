@@ -14,26 +14,36 @@ public class EnemyCharacterBase : CharacterBase
     // Update is called once per frame
     public override void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    base.SetArrowState(Arrow.Left);
-        //}
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    base.SetArrowState(Arrow.Up);
-        //}
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    base.SetArrowState(Arrow.Down);
-        //}
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    base.SetArrowState(Arrow.Right);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Space)) {
-        //    base.IsAttack = true;
-        //}
+        Debug.Log(GameTurnManager.playerAction);
+        if (GameTurnManager.playerAction) {
+            var rand = Random.Range(0,5);
+            Debug.Log("1aaa");
+            switch (rand) {
+                case 0:
 
+                    base.SetArrowState(Arrow.Left);
+                    break;
+
+                case 1:
+                    base.SetArrowState(Arrow.Up);
+
+                    break;
+
+                case 2:
+                    base.SetArrowState(Arrow.Down);
+                    break;
+
+                case 3:
+
+                    base.SetArrowState(Arrow.Right);
+                    break;
+
+                case 4:
+                    base.IsAttack = true;
+                    break;
+
+            }
+        }
         base.Update();
     }
 }
