@@ -7,7 +7,16 @@ public class PotionBase : ItemBase
     [SerializeField]
     private int HealAmount;
 
-    public PotionBase(string name, ItemTypes itemType, int healAmount): base(name, itemType)
+
+    public int GetHealAmount
+    {
+        get
+        {
+            return HealAmount;
+        }
+    }
+
+    public PotionBase(string name, ItemTypes itemType, int healAmount) : base(name, itemType)
     {
         HealAmount = healAmount;
     }
