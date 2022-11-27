@@ -95,12 +95,19 @@ public class CharacterBase : MonoBehaviour
         }
 
         animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        Debug.Log($"{this.gameObject.name}{animationNormalizedTime}");
     }
 
     protected void SetArrowState(Arrow arrow)
     {
         Arrows = arrow;
+    }
+
+    public void LookToDirection(Vector3Int direction) {
+
+        characterAnimator.SetFloat("X", direction.x);
+        characterAnimator.SetFloat("Y", direction.y);
+        characterAnimator.SetTrigger("Clicked");
+
     }
 
 
