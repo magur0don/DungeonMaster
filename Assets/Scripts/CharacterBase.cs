@@ -26,6 +26,8 @@ public class CharacterBase : MonoBehaviour
 
     private Vector3Int characterDirection = Vector3Int.zero;
 
+    private string currentAnimationName = string.Empty;
+
     private void Awake()
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
@@ -106,13 +108,12 @@ public class CharacterBase : MonoBehaviour
 
         characterAnimator.SetFloat("X", direction.x);
         characterAnimator.SetFloat("Y", direction.y);
-        characterAnimator.SetTrigger("Clicked");
-
     }
 
 
     private void AnimationExecution(string animationName,Vector3Int direction)
     {
+        currentAnimationName = animationName;
         characterAnimator.SetBool(animationName, true);
         characterAnimator.SetFloat("X", direction.x);
         characterAnimator.SetFloat("Y", direction.y);

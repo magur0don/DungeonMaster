@@ -52,6 +52,7 @@ public class EnemyCharacterBase : CharacterBase
             if (playerDiff <= 2)
             {
                 base.LookToDirection(face);
+            
             }
         }
     }
