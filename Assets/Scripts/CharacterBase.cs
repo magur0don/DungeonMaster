@@ -24,6 +24,7 @@ public class CharacterBase : MonoBehaviour
 
     protected bool IsAttack = false;
 
+    private float animationNormalizedTime = 0;
 
     private Vector3Int characterDirection = Vector3Int.zero;
 
@@ -31,6 +32,8 @@ public class CharacterBase : MonoBehaviour
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
     }
+
+
 
     public virtual void Update()
     {
@@ -94,6 +97,7 @@ public class CharacterBase : MonoBehaviour
             AnimationExecution(Attack, characterDirection);
             IsAttack = false;
         }
+        animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
     protected void SetArrowState(Arrow arrow)
@@ -104,15 +108,24 @@ public class CharacterBase : MonoBehaviour
 
     private void AnimationExecution(string animationName,Vector3Int direction)
     {
-        // 違うアニメーションがきた場合、前のステートのアニメーションをオフにする
-        if (currentAnimationName != animationName) {
-            characterAnimator.SetBool(currentAnimationName, false);
-            currentAnimationName = animationName;
-        }
-
         characterAnimator.SetBool(animationName, true);
         characterAnimator.SetFloat("X", direction.x);
         characterAnimator.SetFloat("Y", direction.y);
+        characterAnimator.SetTrigger("Clicked");
+        if (animationName == Attack)
+        {
+            StartCoroutine(AttackAnimationEnd());
+        }
+        else {// ただの移動なら攻撃のモーションを即座にキャンセル
+            characterAnimator.SetBool(Attack, false);
+            characterAnimator.SetTrigger("Clicked");
+        }
+    }
+
+    private IEnumerator AttackAnimationEnd() {
+
+        yield return new WaitUntil(()=>animationNormalizedTime > 1);
+        characterAnimator.SetBool(Attack, false);
         characterAnimator.SetTrigger("Clicked");
     }
 
