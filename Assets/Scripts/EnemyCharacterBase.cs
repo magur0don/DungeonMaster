@@ -13,7 +13,7 @@ public class EnemyCharacterBase : CharacterBase
     // Start is called before the first frame update
     void Start()
     {
-
+        base.isEnemy = true;
         this.transform.position = MapGenerator.EnemyPos[0];
     }
 

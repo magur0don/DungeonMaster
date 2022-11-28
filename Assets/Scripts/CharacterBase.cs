@@ -28,6 +28,8 @@ public class CharacterBase : MonoBehaviour
 
     private string currentAnimationName = string.Empty;
 
+    protected bool isEnemy = false;
+
     private void Awake()
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
@@ -95,7 +97,6 @@ public class CharacterBase : MonoBehaviour
             AnimationExecution(Attack, characterDirection);
             IsAttack = false;
         }
-
         animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
@@ -108,6 +109,7 @@ public class CharacterBase : MonoBehaviour
 
         characterAnimator.SetFloat("X", direction.x);
         characterAnimator.SetFloat("Y", direction.y);
+        characterDirection = direction;
     }
 
 
@@ -130,16 +132,36 @@ public class CharacterBase : MonoBehaviour
 
     // 攻撃のアニメーションの時にダメージを負わせる実装
     private IEnumerator AttackAnimationExecution() {
-        var face = Vector3.zero;
-        face = characterDirection;
+        var opponentFace = Vector3.zero;
+        opponentFace = characterDirection;
         // アニメーションの途中で
         yield return new WaitUntil(() => animationNormalizedTime > 0.5f);
-        // rayを飛ばす。
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, face);
-        if (hit.collider != null)
+
+        if (isEnemy)
         {
-            Debug.Log(hit.transform.name);
+            // 敵の場合はプレイヤーに対して当てるRayを放つ
+            int layerNo = LayerMask.NameToLayer("Player");
+            // マスクへの変換（ビットシフト）
+            int layerMask = 1 << layerNo;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
+            if (hit.collider != null)
+            {
+                if (hit.collider.name != this.name)
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                }
+            }
         }
+        else {
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f);
+            if (hit.collider.name != this.name)
+            {
+                Debug.Log(hit.collider.gameObject.name);
+            }
+        }
+
+
         yield return new WaitUntil(()=>animationNormalizedTime > 1);
         characterAnimator.SetBool(Attack, false);
         characterAnimator.SetTrigger("Clicked");
