@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class CharacterParameterBase: MonoBehaviour
 {
-    public float HitPoint;
-    private float maxHitPoint;
-    public float AttackPoint;
-
-    protected CharacterParameterBase(int hitPoint,int attackPoint) {
-        this.HitPoint = hitPoint;
-        this.maxHitPoint = this.HitPoint;
-        this.AttackPoint = attackPoint;
-    }
+    protected float HitPoint;
+    protected float maxHitPoint;
+    protected float AttackPoint;
 
     public void Damage(float damagePoint) {
         this.HitPoint -= damagePoint;

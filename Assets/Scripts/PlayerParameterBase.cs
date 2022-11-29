@@ -4,14 +4,19 @@ public class PlayerParameterBase: CharacterParameterBase
 {
    
     [SerializeField]
-    private int hitPoint;
+    private int playerHitPoint;
 
     [SerializeField]
-    private int attackPoint;
+    private int playerAttackPoint;
 
-    protected PlayerParameterBase(int hitPoint, int attackPoint) : base(hitPoint, attackPoint)
+    public float GetPlayerAttackPoint
     {
-        this.hitPoint = hitPoint;
-        this.attackPoint = attackPoint;
+        get { return playerAttackPoint; }
+    }
+    private void Awake()
+    {
+        base.HitPoint = playerHitPoint;
+        base.maxHitPoint = base.HitPoint;
+        base.AttackPoint = playerAttackPoint;
     }
 }

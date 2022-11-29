@@ -146,18 +146,15 @@ public class CharacterBase : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
             if (hit.collider != null)
             {
-                if (hit.collider.name != this.name)
-                {
-                    Debug.Log(hit.collider.gameObject.name);
-                }
+                hit.transform.GetComponent<CharacterParameterBase>().Damage(this.GetComponent<EnemyParameterBase>().GetEnemyAttackPoint);
             }
         }
         else {
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f);
-            if (hit.collider.name != this.name)
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 2f);
+            if (hit.collider != null)
             {
-                Debug.Log(hit.collider.gameObject.name);
+                hit.transform.GetComponent<CharacterParameterBase>().Damage(this.GetComponent<PlayerParameterBase>().GetPlayerAttackPoint);
             }
         }
 

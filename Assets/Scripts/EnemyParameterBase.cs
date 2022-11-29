@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class EnemyParameterBase : CharacterParameterBase
 {
-    // 外部的要因でパラメーターを変化させたい場合があるのでpublicで作成
-    public CharacterParameterBase EnemyCharacterParameter;
+    [SerializeField]
+    private float enemyHitPoint;
 
     [SerializeField]
-    private int hitPoint;
+    private float enemyAttackPoint;
 
-    [SerializeField]
-    private int attackPoint;
-
-    protected EnemyParameterBase(int hitPoint, int attackPoint) : base(hitPoint, attackPoint)
+    public float GetEnemyAttackPoint
     {
-        this.hitPoint = hitPoint;
-        this.attackPoint = attackPoint;
+        get { return enemyAttackPoint; }
     }
 
+    private void Awake()
+    {
+        base.HitPoint = enemyAttackPoint;
+        base.maxHitPoint = base.HitPoint;
+        base.AttackPoint = enemyAttackPoint;
+    }
 }
