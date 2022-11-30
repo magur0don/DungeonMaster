@@ -6,6 +6,16 @@ public class CharacterParameterBase: MonoBehaviour
     protected float maxHitPoint;
     protected float AttackPoint;
 
+    public float GetAttackPoint {
+
+        get { return AttackPoint; }
+    }
+    public float GetHitPoint
+    {
+
+        get { return HitPoint; }
+    }
+
     public void Damage(float damagePoint) {
         this.HitPoint -= damagePoint;
         if (this.HitPoint < 0) {
@@ -19,4 +29,10 @@ public class CharacterParameterBase: MonoBehaviour
             this.HitPoint = this.maxHitPoint;
         }
     }
+
+    public bool isDead() {
+
+        return this.HitPoint <= 0;
+    }
+
 }

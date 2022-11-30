@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1065462017, guid: cf6879ba03f6f5e4ab3ad5150b0ba076, type: 3}
+      propertyPath: playerHitPoint
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1065462017, guid: cf6879ba03f6f5e4ab3ad5150b0ba076, type: 3}
+      propertyPath: playerAttackPoint
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5272552499143439441, guid: cf6879ba03f6f5e4ab3ad5150b0ba076, type: 3}
       propertyPath: m_Name
       value: Human

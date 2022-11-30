@@ -8,11 +8,6 @@ public class EnemyParameterBase : CharacterParameterBase
     [SerializeField]
     private float enemyAttackPoint;
 
-    public float GetEnemyAttackPoint
-    {
-        get { return enemyAttackPoint; }
-    }
-
     private void Awake()
     {
         base.HitPoint = enemyAttackPoint;

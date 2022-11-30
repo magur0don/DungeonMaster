@@ -30,13 +30,20 @@ public class CharacterBase : MonoBehaviour
 
     protected bool isEnemy = false;
 
+    public CharacterParameterBase characterParameter;
+
     private void Awake()
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
+        characterParameter = this.gameObject.GetComponentInChildren<CharacterParameterBase>();
     }
 
     public virtual void Update()
-    { 
+    {
+        if (characterParameter.isDead()) {
+            Debug.Log($"{this.name}:死んだ");
+        }
+
 
         var FloorToIntPos = Vector3Int.FloorToInt(this.transform.position);
         if (this.transform.position != FloorToIntPos)
@@ -146,15 +153,20 @@ public class CharacterBase : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
             if (hit.collider != null)
             {
-                hit.transform.GetComponent<CharacterParameterBase>().Damage(this.GetComponent<EnemyParameterBase>().GetEnemyAttackPoint);
+                hit.transform.GetComponent<CharacterParameterBase>().Damage(characterParameter.GetAttackPoint);
+                Debug.Log($"{hit.transform.name}:{hit.transform.GetComponent<CharacterParameterBase>().GetHitPoint}");
             }
         }
         else {
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 2f);
-            if (hit.collider != null)
+            int layerNo = LayerMask.NameToLayer("Enemy");
+            // マスクへの変換（ビットシフト）
+            int layerMask = 1 << layerNo;
+            // プレイヤーが敵に攻撃するばあい
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
+            if (hit.collider != null )
             {
-                hit.transform.GetComponent<CharacterParameterBase>().Damage(this.GetComponent<PlayerParameterBase>().GetPlayerAttackPoint);
+                hit.transform.GetComponent<CharacterParameterBase>().Damage(characterParameter.GetAttackPoint);
+                Debug.Log($"{hit.transform.name}:{hit.transform.GetComponent<CharacterParameterBase>().GetHitPoint}");
             }
         }
 

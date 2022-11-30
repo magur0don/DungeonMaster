@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 741866248267843759}
   - component: {fileID: 3496427278255980908}
   - component: {fileID: 6287024902363409594}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Orc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Arrows: 0
+  characterParameter: {fileID: 0}
 --- !u!114 &6287024902363409594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213fbda4a3cd746d5908713c69373018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 20
-  attackPoint: 5
+  enemyHitPoint: 10
+  enemyAttackPoint: 10
 --- !u!1 &5720277354388581608
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +139,7 @@ GameObject:
   - component: {fileID: 5720277354388581611}
   - component: {fileID: 5720277354388581610}
   - component: {fileID: 5720277354388581613}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5720277354642749359}
   - component: {fileID: 5720277354642749358}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

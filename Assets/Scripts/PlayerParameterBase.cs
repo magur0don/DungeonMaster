@@ -9,10 +9,6 @@ public class PlayerParameterBase: CharacterParameterBase
     [SerializeField]
     private int playerAttackPoint;
 
-    public float GetPlayerAttackPoint
-    {
-        get { return playerAttackPoint; }
-    }
     private void Awake()
     {
         base.HitPoint = playerHitPoint;
