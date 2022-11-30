@@ -151,6 +151,7 @@ public class CharacterBase : MonoBehaviour
             // マスクへの変換（ビットシフト）
             int layerMask = 1 << layerNo;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
+            Debug.Log(layerMask);
             if (hit.collider != null)
             {
                 hit.transform.GetComponent<CharacterParameterBase>().Damage(characterParameter.GetAttackPoint);
@@ -160,7 +161,7 @@ public class CharacterBase : MonoBehaviour
         else {
             int layerNo = LayerMask.NameToLayer("Enemy");
             // マスクへの変換（ビットシフト）
-            int layerMask = 1 << layerNo;
+            int layerMask = 1 << layerNo | 1 << 10;
             // プレイヤーが敵に攻撃するばあい
             RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
             if (hit.collider != null )

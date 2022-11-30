@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5443559579184396874}
   - component: {fileID: 2010034888585243820}
   - component: {fileID: 138329933920664049}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ItemPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
