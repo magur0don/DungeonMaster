@@ -14,7 +14,7 @@ public class EnemyCharacterBase : CharacterBase
     void Start()
     {
         base.isEnemy = true;
-        this.transform.position = MapGenerator.EnemyPos[0];
+        this.transform.position = MapGenerator.Instance.EnemyPos[0];
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -181,7 +181,7 @@ public class CharacterBase : MonoBehaviour
     // 進む先に壁がないかをチェックする
     private bool CheckPos(Vector3 vec)
     {
-        if (MapGenerator.map[(int)vec.x, (int)vec.y] == 1)
+        if (MapGenerator.Instance.map[(int)vec.x, (int)vec.y] == 1)
         {
             return false;
         }

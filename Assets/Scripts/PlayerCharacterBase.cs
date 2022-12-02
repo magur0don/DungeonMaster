@@ -8,7 +8,7 @@ public class PlayerCharacterBase : CharacterBase
     void Start()
     {
 
-        this.transform.position = MapGenerator.StartPos;
+        this.transform.position = MapGenerator.Instance.StartPos;
     }
 
     // Update is called once per frame

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 {
 	[SerializeField]
 	private int width = 20;
@@ -37,14 +37,21 @@ public class MapGenerator : MonoBehaviour
     public RuleTile potion;
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
-    public static int[,] map{
+    public int[,] map{
         get; 
         private set;
     }
 
-    public static Vector2 StartPos = Vector2.zero;
+    public Vector2 StartPos = Vector2.zero;
 
-    public static List<Vector2> EnemyPos = new List<Vector2>();
+    public List<Vector2> EnemyPos = new List<Vector2>();
+
+    public override void Awake()
+    {
+        // シーンの中だけのSingletonとするのでflagを立てる
+        isSceneinSingleton = true;
+        base.Awake();
+    }
 
     private void Start()
     {
