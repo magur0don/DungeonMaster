@@ -9,6 +9,12 @@ public class PlayerCharacterBase : CharacterBase
     {
 
         this.transform.position = MapGenerator.Instance.StartPos;
+
+        int num = 8;
+        Debug.Log(num << 1);
+        Debug.Log(num << 2);
+        Debug.Log(num << 3);
+        Debug.Log(num << 4);
     }
 
     // Update is called once per frame

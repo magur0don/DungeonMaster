@@ -34,7 +34,9 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 
     public Tile[] Tiles = new Tile[5];
 
-    public RuleTile potion;
+    public RuleTile Potion;
+
+    public RuleTile NextStagePos;
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
     public int[,] map{
@@ -269,12 +271,12 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
                 }
                 if (map[x, y] == (int)DungeonMapType.NextStagePos)
                 {
-                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[3]); 
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), NextStagePos); 
                 }
 
                 if (map[x, y] == (int)DungeonMapType.Portion)
                 {
-                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), potion);
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), Potion);
                     // OuterTilemap.
                     GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]);
                 }
