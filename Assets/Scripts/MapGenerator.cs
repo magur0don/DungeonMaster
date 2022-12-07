@@ -53,12 +53,8 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
         // シーンの中だけのSingletonとするのでflagを立てる
         isSceneinSingleton = true;
         base.Awake();
-    }
-
-    private void Start()
-    {
         // mapを作成する
-        map = new int[width,height];
+        map = new int[width, height];
         // mapを埋める
         // GetUpperBound(0)は一次元配列の要素の最後の場所を返す
         for (int x = 0; x < width; x++)
@@ -71,26 +67,29 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
         }
         // seedを決めます。Randomにしたい場合はTime.timeなどが一般的。
         float seed = 1f;
-        map = RandomWalkCave(map,seed,50);
+        map = RandomWalkCave(map, seed, 50);
 
         // スタート位置と決めます
         // mapの中の0を操作して、ランダムに座標を取り出します。
         // seedも同じように結果を固定できるようにします。
-        if(rand == null){
+        if (rand == null)
+        {
             rand = new System.Random(seed.GetHashCode());
         }
 
-        if(reqFloorAmount == 0){
+        if (reqFloorAmount == 0)
+        {
             Debug.LogError("mapが生成されませんでした。reqFloorAmountが0です。");
         }
         var startPos = rand.Next(reqFloorAmount);
 
         Debug.Log($"startPos:{startPos}");
         var nextStagePos = rand.Next(reqFloorAmount);
-        
+
         Debug.Log($"nextStagePos:{nextStagePos}");
         // もし結果が同じだった場合はもう一度nextStagePosをRandomで振り直す
-        if(startPos == nextStagePos){
+        if (startPos == nextStagePos)
+        {
             nextStagePos = rand.Next(reqFloorAmount);
         }
 
@@ -108,16 +107,20 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
             for (int y = 0; y < map.GetUpperBound(1); y++)
             {
                 // mapの座標が空いていればstartposとnextStagePosの場合にそこの座標を変更する
-                if(map[x, y] == 0){
+                if (map[x, y] == 0)
+                {
                     posCount++;
-                    if(posCount == startPos){
+                    if (posCount == startPos)
+                    {
                         map[x, y] = (int)DungeonMapType.StartPos;
-                        StartPos = new Vector2(x,y);
+                        StartPos = new Vector2(x, y);
                     }
-                    if(posCount == nextStagePos){
+                    if (posCount == nextStagePos)
+                    {
                         map[x, y] = (int)DungeonMapType.NextStagePos;
                     }
-                    if(posCount == portionPos){
+                    if (posCount == portionPos)
+                    {
                         map[x, y] = (int)DungeonMapType.Portion;
                     }
                     if (posCount == enemyPos)
