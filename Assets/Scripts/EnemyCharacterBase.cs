@@ -10,10 +10,15 @@ public class EnemyCharacterBase : CharacterBase
 
     private int chaseDirection = 0;
     float playerDiff = 10f;
-    // Start is called before the first frame update
+
+    private int enemyActionCount = 0;
+
     void Start()
     {
         base.isEnemy = true;
+
+        this.enemyActionCount = GameTurnManager.playerActionCount;
+
         this.transform.position = MapGenerator.Instance.EnemyPos[0];
     }
 
@@ -68,8 +73,8 @@ public class EnemyCharacterBase : CharacterBase
 
     public override void Update()
     {
-        if (GameTurnManager.playerAction) {
-
+        if (GameTurnManager.playerActionCount != enemyActionCount) {
+            enemyActionCount++;
             if (isChase)
             {
                 // プレイヤーと自分との距離が近ければ攻撃する

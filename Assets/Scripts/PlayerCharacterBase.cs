@@ -46,12 +46,4 @@ public class PlayerCharacterBase : CharacterBase
         base.Update();
     }
 
-    private void LateUpdate()
-    {
-
-        if (base.Arrows == Arrow.Invalide)
-        {
-            GameTurnManager.PlayerActionTurnEnd();
-        }
-    }
 }
