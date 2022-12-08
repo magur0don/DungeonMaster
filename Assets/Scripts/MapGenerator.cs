@@ -18,6 +18,7 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
         Wall = 1,
         StartPos =2,
         Portion =3 ,
+        TreasureBox = 4,
         NextStagePos = 999,
     }
     private System.Random rand = null;
@@ -37,6 +38,8 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
     public RuleTile Potion;
 
     public RuleTile NextStagePos;
+
+    public RuleTile TreasureBox;
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
     public int[,] map{
@@ -99,6 +102,9 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 
         var enemyPos = rand.Next(reqFloorAmount);
 
+
+        var treasureBoxPos = rand.Next(reqFloorAmount);
+
         // カウントを0からスタートさせたいので-1からカウントアップさせていく。
         var posCount = -1;
         // GetUpperBound(0)はその次元の最後の値の場所を返す
@@ -126,6 +132,10 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
                     if (posCount == enemyPos)
                     {
                         EnemyPos.Add(new Vector2(x, y));
+                    }
+                    if (posCount == treasureBoxPos)
+                    {
+                        map[x, y] = (int)DungeonMapType.TreasureBox;
                     }
                 }
             }
@@ -280,10 +290,13 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
                 if (map[x, y] == (int)DungeonMapType.Portion)
                 {
                     OuterTilemap.SetTile(new Vector3Int(x, y, 0), Potion);
-                    // OuterTilemap.
                     GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]);
                 }
-
+                if (map[x, y] == (int)DungeonMapType.TreasureBox)
+                {
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), TreasureBox);
+                    GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]);
+                }
             }
         }
     }
