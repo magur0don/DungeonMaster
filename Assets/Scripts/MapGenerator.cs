@@ -140,10 +140,10 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
                 }
             }
         }
-        RenderMap(map);
-
         // マップを生成した
-        this.GetComponent<EnemySpawner>().EnemySpawn();
+        RenderMap(map);
+        // 敵を生成する
+        this.GetComponent<EnemySpawner>().EnemySpawn(EnemyPos.FirstOrDefault(),EnemySpawner.EnemyType.Normal);
     }
 
     /// <summary>

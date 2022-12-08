@@ -5,12 +5,16 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 
-    public GameObject Enemy;
+    public enum EnemyType {
+        Invalide =-1,
+        Normal,
+        High
+    }
 
-    public void EnemySpawn() {
-        foreach (var pos in MapGenerator.Instance.EnemyPos) {
-            var enemy = Instantiate(Enemy);
-            enemy.transform.position = pos;
-        }
+    public GameObject[] Enemy = new GameObject[2];
+
+    public void EnemySpawn(Vector2 spawnPos, EnemyType enemyType) {
+        var enemy = Instantiate(Enemy[(int)enemyType]);
+        enemy.transform.position = spawnPos;
     }
 }
