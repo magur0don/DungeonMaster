@@ -9,7 +9,9 @@ public class NextStagePos : MonoBehaviour
         // 侵入してきたgameobjectのlayerがPlayerなら
         if (collision.gameObject.layer == 3)
         {
+            DungeonScoreManager.Instance.AddDungeonScore(5);
             SceneTransitionManager.Instance.SceneLoad("SampleScene");
+
         }
     }
 }
