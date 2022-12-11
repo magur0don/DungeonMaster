@@ -143,7 +143,7 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
         // マップを生成した
         RenderMap(map);
         // 敵を生成する
-        this.GetComponent<EnemySpawner>().EnemySpawn(EnemyPos.FirstOrDefault(),EnemySpawner.EnemyType.Normal);
+        this.GetComponent<EnemySpawner>().EnemySpawn(EnemyPos.FirstOrDefault(), EnemyParameterBase.EnemyType.Normal );
 
         StartCoroutine(SetHighOrcSpawn());
     }
@@ -305,7 +305,7 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
     IEnumerator SetHighOrcSpawn() {
 
         yield return new WaitUntil(()=>GameTurnManager.playerActionCount > 10);
-        this.GetComponent<EnemySpawner>().EnemySpawn(StartPos, EnemySpawner.EnemyType.High);
+        this.GetComponent<EnemySpawner>().EnemySpawn(StartPos, EnemyParameterBase.EnemyType.High);
     }
 
 }
