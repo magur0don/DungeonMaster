@@ -19,6 +19,7 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
         StartPos =2,
         Portion =3 ,
         TreasureBox = 4,
+        RetirePoint = 5,
         NextStagePos = 999,
     }
     private System.Random rand = null;
@@ -40,6 +41,8 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
     public RuleTile NextStagePos;
 
     public RuleTile TreasureBox;
+
+    public RuleTile RetirePoint;
 
     // mapは外からアクセスはできるが、このクラス以外でセットすることができなくする
     public int[,] map{
@@ -105,6 +108,13 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 
         var treasureBoxPos = rand.Next(reqFloorAmount);
 
+        var retirePoint = -1;
+        // DungeonHierarchyCounterに記録されているクリア階層が5の倍数(5で割り切れる)ならRetirePointを生成する
+        if (DungeonHierarchyCounter.Instance.GetDungeonHierarchyCount % 5 == 0)
+        {
+            retirePoint = rand.Next(reqFloorAmount);
+        }
+
         // カウントを0からスタートさせたいので-1からカウントアップさせていく。
         var posCount = -1;
         // GetUpperBound(0)はその次元の最後の値の場所を返す
@@ -137,6 +147,16 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
                     {
                         map[x, y] = (int)DungeonMapType.TreasureBox;
                     }
+
+                    // リタイアポイントが設定されていた場合
+                    if (retirePoint != -1)
+                    {
+                        if (posCount == retirePoint) {
+                            map[x, y] = (int)DungeonMapType.RetirePoint;
+                        }
+
+                    }
+
                 }
             }
         }
@@ -296,6 +316,12 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
                 if (map[x, y] == (int)DungeonMapType.TreasureBox)
                 {
                     OuterTilemap.SetTile(new Vector3Int(x, y, 0), TreasureBox);
+                    GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]);
+                }
+
+                if (map[x, y] == (int)DungeonMapType.RetirePoint)
+                {
+                    OuterTilemap.SetTile(new Vector3Int(x, y, 0), RetirePoint);
                     GroundTilemap.SetTile(new Vector3Int(x, y, 0), Tiles[0]);
                 }
             }
