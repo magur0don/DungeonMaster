@@ -40,6 +40,10 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void Update()
     {
+
+        // フラグが立っている場合は操作不能にする
+
+
         if (characterParameter.isDead()) {
             Debug.Log($"{this.name}:死んだ");
         }
