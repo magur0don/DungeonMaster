@@ -32,6 +32,9 @@ public class CharacterBase : MonoBehaviour
 
     public CharacterParameterBase characterParameter;
 
+    // 動いて良いというフラグ
+    public bool isActive = true;
+
     private void Awake()
     {
         characterAnimator = this.gameObject.GetComponentInChildren<Animator>();
@@ -41,8 +44,10 @@ public class CharacterBase : MonoBehaviour
     public virtual void Update()
     {
 
-        // フラグが立っている場合は操作不能にする
-
+        // フラグが折れている場合は操作不能にする
+        if (!isActive) {
+            return;
+        }
 
         if (characterParameter.isDead()) {
             Debug.Log($"{this.name}:死んだ");
