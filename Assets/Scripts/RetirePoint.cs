@@ -23,12 +23,12 @@ public class RetirePoint : MonoBehaviour
         if (collision.gameObject.layer == playerLayar)
         {
 
-            Debug.Log(collision.name);
             TextModalPrefab.SetActive(true);
             var characters = FindObjectsOfType<CharacterBase>();
             foreach (var character in characters) {
                 // キャラクターの移動を不活性にする
                 character.isActive = false;
+
                 var modal = TextModalPrefab.GetComponent<ModalBase>();
                 modal.SetTwoButtonModal("RetirePoint", "do you want to retire?",
                     () => { Debug.Log("yes"); },
