@@ -43,7 +43,7 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void Update()
     {
-
+        animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
         // フラグが折れている場合は操作不能にする
         if (!isActive)
         {
@@ -56,6 +56,9 @@ public class CharacterBase : MonoBehaviour
             {   // 敵の場合は
                 // Deadのアニメーションをたたいて
                 // アニメーションが終わったら消える
+
+                characterAnimator.SetBool("Die", true);
+                characterAnimator.SetTrigger("Clicked");
             }
             else
             {
@@ -63,7 +66,8 @@ public class CharacterBase : MonoBehaviour
                 // Deadのアニメーションをたたいて
                 // アニメーションが終わったら
                 // リザルトにとぶ
-
+                StartCoroutine(DeadAnimationExecution());
+                isActive = false;
                 return;
             }
         }
@@ -128,7 +132,6 @@ public class CharacterBase : MonoBehaviour
             AnimationExecution(Attack, characterDirection);
             IsAttack = false;
         }
-        animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
     protected void SetArrowState(Arrow arrow)
@@ -204,7 +207,14 @@ public class CharacterBase : MonoBehaviour
         characterAnimator.SetBool(Attack, false);
         characterAnimator.SetTrigger("Clicked");
     }
+    private IEnumerator DeadAnimationExecution()
+    {
+        characterAnimator.SetBool("Die", true);
+        characterAnimator.SetTrigger("Clicked");
+        yield return new WaitUntil(() => animationNormalizedTime > 1f);
+        SceneTransitionManager.Instance.SceneLoad("ResultScene");
 
+    }
 
     // 進む先に壁がないかをチェックする
     private bool CheckPos(Vector3 vec)
