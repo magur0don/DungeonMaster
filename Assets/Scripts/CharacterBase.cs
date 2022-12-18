@@ -57,8 +57,9 @@ public class CharacterBase : MonoBehaviour
                 // Deadのアニメーションをたたいて
                 // アニメーションが終わったら消える
 
-                characterAnimator.SetBool("Die", true);
-                characterAnimator.SetTrigger("Clicked");
+                StartCoroutine(DeadAnimationExecution());
+                isActive = false;
+                return;
             }
             else
             {
@@ -212,7 +213,14 @@ public class CharacterBase : MonoBehaviour
         characterAnimator.SetBool("Die", true);
         characterAnimator.SetTrigger("Clicked");
         yield return new WaitUntil(() => animationNormalizedTime > 1f);
-        SceneTransitionManager.Instance.SceneLoad("ResultScene");
+        if (isEnemy)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            SceneTransitionManager.Instance.SceneLoad("ResultScene");
+        }
 
     }
 
