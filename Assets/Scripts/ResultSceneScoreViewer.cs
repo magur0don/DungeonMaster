@@ -7,11 +7,11 @@ public class ResultSceneScoreViewer : MonoBehaviour
 {
 
     [SerializeField]
-    private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI ScoreText;
     // Start is called before the first frame update
     void Start()
     {
-        
+        ScoreText.text = DungeonScoreManager.Instance.GetDungeonScore.ToString();
     }
 
 }

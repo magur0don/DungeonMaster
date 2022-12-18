@@ -45,12 +45,27 @@ public class CharacterBase : MonoBehaviour
     {
 
         // フラグが折れている場合は操作不能にする
-        if (!isActive) {
+        if (!isActive)
+        {
             return;
         }
 
-        if (characterParameter.isDead()) {
-            Debug.Log($"{this.name}:死んだ");
+        if (characterParameter.isDead())
+        {
+            if (isEnemy)
+            {   // 敵の場合は
+                // Deadのアニメーションをたたいて
+                // アニメーションが終わったら消える
+            }
+            else
+            {
+                // プレイヤーの場合
+                // Deadのアニメーションをたたいて
+                // アニメーションが終わったら
+                // リザルトにとぶ
+
+                return;
+            }
         }
 
 
@@ -79,7 +94,7 @@ public class CharacterBase : MonoBehaviour
                 // 上に移動
                 if (CheckPos(FloorToIntPos += Vector3Int.up))
                 {
-                    characterDirection = Vector3Int.up; 
+                    characterDirection = Vector3Int.up;
                     this.transform.position += characterDirection;
                     AnimationExecution(Walk, characterDirection);
                 }
@@ -121,7 +136,8 @@ public class CharacterBase : MonoBehaviour
         Arrows = arrow;
     }
 
-    public void LookToDirection(Vector3Int direction) {
+    public void LookToDirection(Vector3Int direction)
+    {
 
         characterAnimator.SetFloat("X", direction.x);
         characterAnimator.SetFloat("Y", direction.y);
@@ -129,7 +145,7 @@ public class CharacterBase : MonoBehaviour
     }
 
 
-    private void AnimationExecution(string animationName,Vector3Int direction)
+    private void AnimationExecution(string animationName, Vector3Int direction)
     {
         currentAnimationName = animationName;
         characterAnimator.SetBool(animationName, true);
@@ -140,14 +156,16 @@ public class CharacterBase : MonoBehaviour
         {
             StartCoroutine(AttackAnimationExecution());
         }
-        else {// ただの移動なら攻撃のモーションを即座にキャンセル
+        else
+        {// ただの移動なら攻撃のモーションを即座にキャンセル
             characterAnimator.SetBool(Attack, false);
             characterAnimator.SetTrigger("Clicked");
         }
     }
 
     // 攻撃のアニメーションの時にダメージを負わせる実装
-    private IEnumerator AttackAnimationExecution() {
+    private IEnumerator AttackAnimationExecution()
+    {
         var opponentFace = Vector3.zero;
         opponentFace = characterDirection;
         // アニメーションの途中で
@@ -167,13 +185,14 @@ public class CharacterBase : MonoBehaviour
                 Debug.Log($"{hit.transform.name}:{hit.transform.GetComponent<CharacterParameterBase>().GetHitPoint}");
             }
         }
-        else {
+        else
+        {
             int layerNo = LayerMask.NameToLayer("Enemy");
             // マスクへの変換（ビットシフト）
             int layerMask = 1 << layerNo;
             // プレイヤーが敵に攻撃するばあい
             RaycastHit2D hit = Physics2D.Raycast(transform.position, opponentFace, 1.5f, layerMask);
-            if (hit.collider != null )
+            if (hit.collider != null)
             {
                 hit.collider.transform.parent.GetComponent<CharacterParameterBase>().Damage(characterParameter.GetAttackPoint);
                 Debug.Log($"{hit.transform.name}:{hit.transform.GetComponent<CharacterParameterBase>().GetHitPoint}");
@@ -181,7 +200,7 @@ public class CharacterBase : MonoBehaviour
         }
 
 
-        yield return new WaitUntil(()=>animationNormalizedTime > 1);
+        yield return new WaitUntil(() => animationNormalizedTime > 1);
         characterAnimator.SetBool(Attack, false);
         characterAnimator.SetTrigger("Clicked");
     }

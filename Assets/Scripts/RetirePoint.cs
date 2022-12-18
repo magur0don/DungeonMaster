@@ -31,7 +31,7 @@ public class RetirePoint : MonoBehaviour
 
                 var modal = TextModalPrefab.GetComponent<ModalBase>();
                 modal.SetTwoButtonModal("RetirePoint", "do you want to retire?",
-                    () => { Debug.Log("yes"); },
+                    ()=> { SceneTransitionManager.Instance.SceneLoad("ResultScene");},
                     () => { Debug.Log("No"); });
 
             }
