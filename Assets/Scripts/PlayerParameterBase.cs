@@ -16,12 +16,13 @@ public class PlayerParameterBase: CharacterParameterBase
         { 
             base.HitPoint = DungeonMemoryManager.Instance.GetPlayerHitPoint;
             base.maxHitPoint = DungeonMemoryManager.Instance.GetPlayerMaxHitPoint;
+            base.AttackPoint = playerAttackPoint;
         }
         else {
             base.HitPoint = playerHitPoint;
             base.maxHitPoint = base.HitPoint;
+            base.AttackPoint = playerAttackPoint;
         }
-        base.AttackPoint = playerAttackPoint;
     }
 
 }
