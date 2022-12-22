@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DungeonTitleManager : MonoBehaviour
+public class TitleSceneManager : MonoBehaviour
 {
     [SerializeField]
     Button startButton;
