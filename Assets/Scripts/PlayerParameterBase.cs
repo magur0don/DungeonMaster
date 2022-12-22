@@ -9,10 +9,19 @@ public class PlayerParameterBase: CharacterParameterBase
     [SerializeField]
     private int playerAttackPoint;
 
-    private void Awake()
+    private void Start()
     {
-        base.HitPoint = playerHitPoint;
-        base.maxHitPoint = base.HitPoint;
+        // ダンジョンの記録があるのでそこからhitpointを取得する
+        if (DungeonMemoryManager.Instance.GetPlayerHitPoint != 0)
+        { 
+            base.HitPoint = DungeonMemoryManager.Instance.GetPlayerHitPoint;
+            base.maxHitPoint = DungeonMemoryManager.Instance.GetPlayerMaxHitPoint;
+        }
+        else {
+            base.HitPoint = playerHitPoint;
+            base.maxHitPoint = base.HitPoint;
+        }
         base.AttackPoint = playerAttackPoint;
     }
+
 }

@@ -18,7 +18,6 @@ public class CharacterParameterBase: MonoBehaviour
 
     public float GetMaxHitPoint
     {
-
         get { return maxHitPoint; }
     }
 
