@@ -12,6 +12,7 @@ public class NextStagePos : MonoBehaviour
             DungeonScoreManager.Instance.AddDungeonScore(5);
             DungeonMemoryManager.Instance.SetPlayerParameter(collision.gameObject.GetComponent<CharacterParameterBase>());
             DungeonHierarchyCounter.Instance.DungeonHierarchyCountUP();
+            DungeonSoundManager.Instance.PlaySE( DungeonSoundManager.SEType.NextStagePosSE);
             SceneTransitionManager.Instance.SceneLoad("SampleScene");
 
         }

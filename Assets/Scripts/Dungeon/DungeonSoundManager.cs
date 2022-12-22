@@ -13,8 +13,6 @@ public class DungeonSoundManager : SingletonMonoBehaviour<DungeonSoundManager>
     }
     private AudioSource[] audioSources;
 
-
-
     public enum BGMType
     {
         Invalide = -1,
@@ -26,6 +24,14 @@ public class DungeonSoundManager : SingletonMonoBehaviour<DungeonSoundManager>
 
     [SerializeField]
     private AudioClip[] BGMClips;
+
+    public enum SEType {
+        Invalide = -1,
+        SwordAttack,
+        ChargeAttack,
+        NextStagePosSE,
+        SoundTypesMax
+    }
 
     [SerializeField]
     private AudioClip[] SEClips;
@@ -49,15 +55,16 @@ public class DungeonSoundManager : SingletonMonoBehaviour<DungeonSoundManager>
         }
     }
 
-    public void PlaySE(SoundType soundType)
+    public void PlaySE(SEType SEType)
     {
-        switch (soundType) {
-            case SoundType.SEAttack1:
-                audioSources[(int)SoundType.SEAttack1].PlayOneShot(SEClips[0]);
-                break;
-            case SoundType.SEAttack2:
-                audioSources[(int)SoundType.SEAttack2].PlayOneShot(SEClips[1]);
-                break;
+        if (!audioSources[(int)SoundType.SEAttack1].isPlaying)
+        {
+
+            audioSources[(int)SoundType.SEAttack1].PlayOneShot(SEClips[(int)SEType]);
+        }
+        else {
+
+            audioSources[(int)SoundType.SEAttack2].PlayOneShot(SEClips[(int)SEType]);
         }
     }
 }
