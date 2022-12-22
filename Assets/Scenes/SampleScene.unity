@@ -1220,10 +1220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fe8f4d044414a21ace8eb4429bc5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGMClips: {fileID: 8300000, guid: 8a0f165a21d0440cbada0b4fb86508ec, type: 3}
+  BGMClips:
+  - {fileID: 8300000, guid: 36f9a127af53a41309d54cc14d7c3652, type: 3}
+  - {fileID: 8300000, guid: 8a0f165a21d0440cbada0b4fb86508ec, type: 3}
+  - {fileID: 8300000, guid: f2d1c1621bdd34ebd8651b7c296a21fb, type: 3}
   SEClips:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 63e7d5f92b03d4135a7aa6393fa4b88f, type: 3}
+  - {fileID: 8300000, guid: 2c867d84adf9643c398429b4354fcdb3, type: 3}
 --- !u!4 &1626098574
 Transform:
   m_ObjectHideFlags: 0

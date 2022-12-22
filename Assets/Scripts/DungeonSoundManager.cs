@@ -7,45 +7,52 @@ public class DungeonSoundManager : SingletonMonoBehaviour<DungeonSoundManager>
     public enum SoundType {
         Invalide =-1,
         BGM,
-        SE1,
-        SE2,
-        SoundTypeMax  
+        SEAttack1,
+        SEAttack2,
+        SoundTypesMax  
     }
     private AudioSource[] audioSources;
 
+
+
+    public enum BGMType
+    {
+        Invalide = -1,
+        DungeonTitleBGM,
+        DungeonAttackBGM,
+        DungeonResultBGM,
+        SoundTypesMax
+    }
+
     [SerializeField]
-    private AudioClip BGMClips;
+    private AudioClip[] BGMClips;
 
     [SerializeField]
     private AudioClip[] SEClips;
 
     public override void Awake()
     {
-        audioSources = new AudioSource[(int)SoundType.SoundTypeMax];
+        audioSources = new AudioSource[(int)SoundType.SoundTypesMax];
         base.Awake();
-        for (int i =0;i< (int)SoundType.SoundTypeMax;i++)
+        for (int i =0;i< (int)SoundType.SoundTypesMax;i++)
         {
             audioSources[i] = this.gameObject.AddComponent<AudioSource>();
         }
     }
 
-    public void PlayeBGM() {
-        // 音楽が再生中ではなかったら再生する
-        if (!audioSources[(int)SoundType.BGM].isPlaying) {
-            audioSources[(int)SoundType.BGM].clip = BGMClips;
+    public void PlayeBGM(BGMType bgmType) {
+            audioSources[(int)SoundType.BGM].clip = BGMClips[(int)bgmType];
             audioSources[(int)SoundType.BGM].Play();
-        }
     }
 
-    public void PlayeSE(SoundType soundType)
+    public void PlaySE(SoundType soundType)
     {
         switch (soundType) {
-            case SoundType.SE1:
-                // 音楽が再生中ではなかったら再生する
-                audioSources[(int)SoundType.SE1].PlayOneShot(SEClips[0]);
+            case SoundType.SEAttack1:
+                audioSources[(int)SoundType.SEAttack1].PlayOneShot(SEClips[0]);
                 break;
-            case SoundType.SE2:
-                audioSources[(int)SoundType.SE2].PlayOneShot(SEClips[1]);
+            case SoundType.SEAttack2:
+                audioSources[(int)SoundType.SEAttack2].PlayOneShot(SEClips[1]);
                 break;
         }
     }

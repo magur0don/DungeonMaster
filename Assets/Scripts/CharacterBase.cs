@@ -175,6 +175,8 @@ public class CharacterBase : MonoBehaviour
         // アニメーションの途中で
         yield return new WaitUntil(() => animationNormalizedTime > 0.5f);
 
+        DungeonSoundManager.Instance.PlaySE( DungeonSoundManager.SoundType.SEAttack1);
+
         if (isEnemy)
         {
             // 敵の場合はプレイヤーに対して当てるRayを放つ
