@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: ItemPotionTile
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 8145951374611147372, guid: ca1fe683d8872314481b6dbcd87cb1d1, type: 3}
-  m_DefaultGameObject: {fileID: 6733958548751057331, guid: 67a3a4b6375514605a091686529787b1, type: 3}
+  m_DefaultGameObject: {fileID: 6733958548751057331, guid: 0fb3918e6a632ba48ac162392b55eb77, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
     - {fileID: 8145951374611147372, guid: ca1fe683d8872314481b6dbcd87cb1d1, type: 3}
-    m_GameObject: {fileID: 6733958548751057331, guid: 67a3a4b6375514605a091686529787b1, type: 3}
+    m_GameObject: {fileID: 6733958548751057331, guid: 0fb3918e6a632ba48ac162392b55eb77, type: 3}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
