@@ -12,7 +12,6 @@ public class ResultSceneScoreViewer : MonoBehaviour
     void Start()
     {
         ScoreText.text = DungeonScoreManager.Instance.GetDungeonScore.ToString();
-        DungeonSoundManager.Instance.PlayeBGM( DungeonSoundManager.BGMType.DungeonResultBGM);
     }
 
 }

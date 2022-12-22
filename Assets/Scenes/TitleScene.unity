@@ -123,6 +123,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &729558886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 729558888}
+  - component: {fileID: 729558887}
+  m_Layer: 0
+  m_Name: DungeonSoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &729558887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729558886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fe8f4d044414a21ace8eb4429bc5d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMClips:
+  - {fileID: 8300000, guid: 36f9a127af53a41309d54cc14d7c3652, type: 3}
+  - {fileID: 8300000, guid: 8a0f165a21d0440cbada0b4fb86508ec, type: 3}
+  - {fileID: 8300000, guid: f2d1c1621bdd34ebd8651b7c296a21fb, type: 3}
+  SEClips:
+  - {fileID: 8300000, guid: 63e7d5f92b03d4135a7aa6393fa4b88f, type: 3}
+  - {fileID: 8300000, guid: 2c867d84adf9643c398429b4354fcdb3, type: 3}
+--- !u!4 &729558888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729558886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.2, y: 0.52, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105136151
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +389,7 @@ GameObject:
   - component: {fileID: 1269516830}
   - component: {fileID: 1269516829}
   m_Layer: 5
-  m_Name: ResultText
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,7 +435,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Dungeon Attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5dd281e22d2d28a4bb26f509e2f17937, type: 2}
   m_sharedMaterial: {fileID: 8313819588680448706, guid: 5dd281e22d2d28a4bb26f509e2f17937, type: 2}
@@ -473,7 +524,6 @@ GameObject:
   - component: {fileID: 1536435254}
   - component: {fileID: 1536435253}
   - component: {fileID: 1536435257}
-  - component: {fileID: 1536435256}
   - component: {fileID: 1536435258}
   m_Layer: 0
   m_Name: Main Camera
@@ -548,19 +598,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1536435256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536435252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f22e972efc11444cbbe3365bdfe24445, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScoreText: {fileID: 1269516829}
 --- !u!114 &1536435257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,10 +640,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1536435252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61e7b805ed88f41ceb56d82210548676, type: 3}
+  m_Script: {fileID: 11500000, guid: 9960fcfc314b74a27a9cc3ee8eb0db3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultButton: {fileID: 1882521713}
+  startButton: {fileID: 1882521713}
 --- !u!1 &1844308036
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,7 +759,7 @@ GameObject:
   - component: {fileID: 1882521714}
   - component: {fileID: 1882521713}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -41,8 +41,12 @@ public class DungeonSoundManager : SingletonMonoBehaviour<DungeonSoundManager>
     }
 
     public void PlayeBGM(BGMType bgmType) {
+        // 現在再生中の音源とは違う音源を再生する場合は再生できる
+        if (audioSources[(int)SoundType.BGM].clip != BGMClips[(int)bgmType]) {
+
             audioSources[(int)SoundType.BGM].clip = BGMClips[(int)bgmType];
             audioSources[(int)SoundType.BGM].Play();
+        }
     }
 
     public void PlaySE(SoundType soundType)
