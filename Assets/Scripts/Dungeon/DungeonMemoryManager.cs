@@ -24,6 +24,12 @@ public class DungeonMemoryManager : SingletonMonoBehaviour<DungeonMemoryManager>
         get { return playerAttackPoint; }
     }
 
+    public void DungeonMemoryManagerInit() {
+        playerHitPoint = 0f;
+        playerMaxHitPoint = 0f;
+        playerAttackPoint = 0f;
+    }
+
     public void SetPlayerParameter(CharacterParameterBase playerParameter)
     {
         playerHitPoint = playerParameter.GetHitPoint;
