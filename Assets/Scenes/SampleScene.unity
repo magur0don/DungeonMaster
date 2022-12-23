@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1065462012, guid: cf6879ba03f6f5e4ab3ad5150b0ba076, type: 3}
+      propertyPath: Arrows
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1065462017, guid: cf6879ba03f6f5e4ab3ad5150b0ba076, type: 3}
       propertyPath: playerHitPoint
       value: 20
