@@ -20,23 +20,19 @@ public class PlayerCharacterBase : CharacterBase
     // Update is called once per frame
     public override void Update()
     {
-        if (Input.anyKeyDown) {
-            GameTurnManager.PlayerActionTurnExecution();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             base.SetArrowState(Arrow.Left);
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             base.SetArrowState(Arrow.Up);
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             base.SetArrowState(Arrow.Down);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             base.SetArrowState(Arrow.Right);
         }
