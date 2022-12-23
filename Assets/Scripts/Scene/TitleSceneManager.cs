@@ -9,6 +9,7 @@ public class TitleSceneManager : MonoBehaviour
     Button startButton;
     private void Start()
     {
+        GameTurnManager.playerActionCount = 0;
         DungeonSoundManager.Instance.PlayeBGM( DungeonSoundManager.BGMType.DungeonTitleBGM);
         DungeonScoreManager.Instance.DungeonScoreInit();
         DungeonMemoryManager.Instance.DungeonMemoryManagerInit();

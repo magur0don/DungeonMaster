@@ -44,6 +44,8 @@ public class CharacterBase : MonoBehaviour
     public virtual void Update()
     {
         animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+      
+
         // フラグが折れている場合は操作不能にする
         if (!isActive)
         {
