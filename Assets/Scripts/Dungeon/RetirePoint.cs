@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class RetirePoint : MonoBehaviour
 {
@@ -22,19 +23,27 @@ public class RetirePoint : MonoBehaviour
     { 
         if (collision.gameObject.layer == playerLayar)
         {
-
             TextModalPrefab.SetActive(true);
             var characters = FindObjectsOfType<CharacterBase>();
             foreach (var character in characters) {
                 // キャラクターの移動を不活性にする
                 character.isActive = false;
-
-                var modal = TextModalPrefab.GetComponent<ModalBase>();
-                modal.SetTwoButtonModal("RetirePoint", "do you want to retire?",
-                    ()=> { SceneTransitionManager.Instance.SceneLoad("ResultScene");},
-                    () => { Debug.Log("No"); });
-
             }
+            var modal = TextModalPrefab.GetComponent<ModalBase>();
+
+            modal.SetTwoButtonModal("RetirePoint", "do you want to retire?",
+                () => {
+                    SceneTransitionManager.Instance.SceneLoad("ResultScene");
+                },
+                () => { //NO
+                    foreach (var character in characters)
+                    {
+                        // キャラクターの移動を活性化にする
+                        character.isActive = true;
+                    }
+                    TextModalPrefab.SetActive(false);
+                }
+            );   
         }
     }
 }

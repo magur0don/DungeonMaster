@@ -210,8 +210,11 @@ public class CharacterBase : MonoBehaviour
         characterAnimator.SetBool(Attack, false);
         characterAnimator.SetTrigger("Clicked");
     }
+
     private IEnumerator DeadAnimationExecution()
     {
+        // アニメーターのパラメーターを初期化する
+        characterAnimator.Rebind();
         characterAnimator.SetBool("Die", true);
         characterAnimator.SetTrigger("Clicked");
         yield return new WaitUntil(() => animationNormalizedTime > 1f);
@@ -221,6 +224,7 @@ public class CharacterBase : MonoBehaviour
         }
         else
         {
+            gameObject.SetActive(false);
             SceneTransitionManager.Instance.SceneLoad("ResultScene");
         }
 
@@ -235,4 +239,5 @@ public class CharacterBase : MonoBehaviour
         }
         return true;
     }
+
 }
