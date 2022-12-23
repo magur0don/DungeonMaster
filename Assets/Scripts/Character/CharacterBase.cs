@@ -32,6 +32,16 @@ public class CharacterBase : MonoBehaviour
 
     public CharacterParameterBase characterParameter;
 
+
+    // 行動を分ける
+    enum ActionState{
+        Invalide =-1,
+        Action,
+        Result,
+        Dead
+    }
+    ActionState ActionStates = ActionState.Invalide;
+
     // 動いて良いというフラグ
     public bool isActive = true;
 
@@ -44,97 +54,124 @@ public class CharacterBase : MonoBehaviour
     public virtual void Update()
     {
         animationNormalizedTime = characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-      
 
         // フラグが折れている場合は操作不能にする
         if (!isActive)
         {
             return;
         }
-
-        if (characterParameter.isDead())
-        {
-            if (isEnemy)
-            {   // 敵の場合は
-                // Deadのアニメーションをたたいて
-                // アニメーションが終わったら消える
-
-                StartCoroutine(DeadAnimationExecution());
-                isActive = false;
-                return;
-            }
-            else
-            {
-                // プレイヤーの場合
-                // Deadのアニメーションをたたいて
-                // アニメーションが終わったら
-                // リザルトにとぶ
-                StartCoroutine(DeadAnimationExecution());
-                isActive = false;
-                return;
-            }
-        }
-
-
-        var FloorToIntPos = Vector3Int.FloorToInt(this.transform.position);
-        if (this.transform.position != FloorToIntPos)
-        {
-            this.transform.position = FloorToIntPos;
-        }
-
-        switch (Arrows)
-        {
-            case Arrow.Invalide:
+        switch (ActionStates) {
+            case ActionState.Invalide:
+                // アニメーションが終わったらリザルトへ
+                    ActionStates = ActionState.Action;
+                
                 break;
 
-            case Arrow.Left:
-                // 左に移動
-                if (CheckPos(FloorToIntPos += Vector3Int.left))
+            case ActionState.Action:
+                var FloorToIntPos = Vector3Int.FloorToInt(this.transform.position);
+                if (this.transform.position != FloorToIntPos)
                 {
-                    characterDirection = Vector3Int.left;
-                    this.transform.position += characterDirection;
-                    AnimationExecution(Walk, characterDirection);
+                    this.transform.position = FloorToIntPos;
+                }
+
+                switch (Arrows)
+                {
+                    case Arrow.Invalide:
+                        break;
+
+                    case Arrow.Left:
+                        // 左に移動
+                        if (CheckPos(FloorToIntPos += Vector3Int.left))
+                        {
+                            characterDirection = Vector3Int.left;
+                            this.transform.position += characterDirection;
+                            AnimationExecution(Walk, characterDirection);
+                        }
+                        break;
+
+                    case Arrow.Up:
+                        // 上に移動
+                        if (CheckPos(FloorToIntPos += Vector3Int.up))
+                        {
+                            characterDirection = Vector3Int.up;
+                            this.transform.position += characterDirection;
+                            AnimationExecution(Walk, characterDirection);
+                        }
+                        break;
+
+                    case Arrow.Right:
+                        // 右に移動
+                        if (CheckPos(FloorToIntPos += Vector3Int.right))
+                        {
+                            characterDirection = Vector3Int.right;
+                            this.transform.position += characterDirection;
+                            AnimationExecution(Walk, characterDirection);
+
+                        }
+                        break;
+
+                    case Arrow.Down:
+                        // 下に移動
+                        if (CheckPos(FloorToIntPos += Vector3Int.down))
+                        {
+                            characterDirection = Vector3Int.down;
+                            this.transform.position += characterDirection;
+                            AnimationExecution(Walk, characterDirection);
+                        }
+                        break;
+                }
+                Arrows = Arrow.Invalide;
+
+                if (IsAttack)
+                {
+                    AnimationExecution(Attack, characterDirection);
+                    IsAttack = false;
+                }
+                // アニメーションが終わったらリザルトへ
+                if (animationNormalizedTime >1f) {
+                    ActionStates = ActionState.Result;
+                }
+
+                break;
+
+            case ActionState.Result:
+                if (isEnemy)
+                {
+                    Debug.Log(animationNormalizedTime);
+                }
+                if (characterParameter.isDead() && isActive)
+                {
+                    if (isEnemy)
+                    {   // 敵の場合は
+                        // Deadのアニメーションをたたいて
+                        // アニメーションが終わったら消える
+
+                        StartCoroutine(DeadAnimationExecution());
+                        isActive = false;
+                    }
+                    else
+                    {
+                        // プレイヤーの場合
+                        // Deadのアニメーションをたたいて
+                        // アニメーションが終わったら
+                        // リザルトにとぶ
+                        StartCoroutine(DeadAnimationExecution());
+                        isActive = false;
+                    }
+                }
+                else {
+
+                    ActionStates = ActionState.Invalide;
                 }
                 break;
-
-            case Arrow.Up:
-                // 上に移動
-                if (CheckPos(FloorToIntPos += Vector3Int.up))
-                {
-                    characterDirection = Vector3Int.up;
-                    this.transform.position += characterDirection;
-                    AnimationExecution(Walk, characterDirection);
-                }
-                break;
-
-            case Arrow.Right:
-                // 右に移動
-                if (CheckPos(FloorToIntPos += Vector3Int.right))
-                {
-                    characterDirection = Vector3Int.right;
-                    this.transform.position += characterDirection;
-                    AnimationExecution(Walk, characterDirection);
-
-                }
-                break;
-
-            case Arrow.Down:
-                // 下に移動
-                if (CheckPos(FloorToIntPos += Vector3Int.down))
-                {
-                    characterDirection = Vector3Int.down;
-                    this.transform.position += characterDirection;
-                    AnimationExecution(Walk, characterDirection);
-                }
+            case ActionState.Dead:
+                // 基本的には何もしない
                 break;
         }
-        Arrows = Arrow.Invalide;
 
-        if (IsAttack)
-        {
-            AnimationExecution(Attack, characterDirection);
-            IsAttack = false;
-        }
+        
+
+
     }
 
     protected void SetArrowState(Arrow arrow)
@@ -215,11 +252,12 @@ public class CharacterBase : MonoBehaviour
 
     private IEnumerator DeadAnimationExecution()
     {
+        Debug.Log("deadStart");
         // アニメーターのパラメーターを初期化する
         characterAnimator.Rebind();
         characterAnimator.SetBool("Die", true);
         characterAnimator.SetTrigger("Clicked");
-        yield return new WaitUntil(() => animationNormalizedTime > 1f);
+        yield return new WaitUntil(() => animationNormalizedTime > 0.9f);
         if (isEnemy)
         {
             gameObject.SetActive(false);
@@ -229,6 +267,8 @@ public class CharacterBase : MonoBehaviour
             gameObject.SetActive(false);
             SceneTransitionManager.Instance.SceneLoad("ResultScene");
         }
+        Debug.Log("deadEnd");
+        ActionStates = ActionState.Dead;
 
     }
 
