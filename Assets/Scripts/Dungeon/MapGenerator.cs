@@ -72,7 +72,7 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
             }
         }
         // seedを決めます。Randomにしたい場合はTime.timeなどが一般的。
-        float seed = 1f;
+        float seed = Time.time;
         map = RandomWalkCave(map, seed, 50);
 
         // スタート位置と決めます

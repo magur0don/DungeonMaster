@@ -9,6 +9,7 @@ public class NextStagePos : MonoBehaviour
         // 侵入してきたgameobjectのlayerがPlayerなら
         if (collision.gameObject.layer == 3)
         {
+            GameTurnManager.playerActionCount = 0;
             DungeonScoreManager.Instance.AddDungeonScore(5);
             DungeonMemoryManager.Instance.SetPlayerParameter(collision.gameObject.GetComponent<CharacterParameterBase>());
             DungeonHierarchyCounter.Instance.DungeonHierarchyCountUP();
